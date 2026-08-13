@@ -13,13 +13,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 position="top-right"
                 toastOptions={{
                     style: {
-                        background: '#1A1F2C',
-                        color: '#F0EDE8',
-                        border: '1px solid rgba(201,135,58,0.3)',
-                        fontFamily: "'Inter', sans-serif",
+                        background: 'var(--bg-elevated)',
+                        color: 'var(--text-primary)',
+                        border: '1px solid var(--border-subtle)',
+                        fontFamily: "'Noto Sans', 'Segoe UI', Arial, sans-serif",
+                        boxShadow: 'var(--shadow-md)',
                     },
-                    success: { iconTheme: { primary: '#C9873A', secondary: '#0D0F14' } },
-                    error: { iconTheme: { primary: '#E84545', secondary: '#0D0F14' } },
+                    success: { iconTheme: { primary: 'var(--color-primary)', secondary: 'var(--bg-primary)' } },
+                    error: { iconTheme: { primary: 'var(--color-accent)', secondary: 'var(--bg-primary)' } },
                 }}
             />
         </BrowserRouter>

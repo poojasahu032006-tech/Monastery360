@@ -1,0 +1,412 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MONASTERY360 — Crowd Heatmap & Visitor Management System CSS
+   Interactive Leaflet Map + Time-Slot Simulator + Alternative Recommendation Engine
+═══════════════════════════════════════════════════════════════════════════ */
+
+.crowd-heatmap-page {
+    padding: 2.5rem 0 5rem;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.crowd-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.crowd-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    background: rgba(139, 46, 46, 0.10);
+    color: var(--color-primary);
+    border: 1px solid rgba(139, 46, 46, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.875rem;
+}
+
+.crowd-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 0.625rem;
+}
+
+.crowd-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ── Top Control Bar: Time Slots & Legend ────────────────────────────────── */
+.crowd-control-panel {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.slot-selection-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.slot-buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.slot-btn {
+    padding: 7px 16px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--border-medium);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.slot-btn:hover {
+    border-color: #8B2E2E;
+    color: #8B2E2E;
+}
+
+.slot-btn.is-active {
+    background: #8B2E2E;
+    border-color: #8B2E2E;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(139, 46, 46, 0.25);
+}
+
+/* Heatmap Legend Bar */
+.crowd-legend-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-items-list {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.legend-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ── Filter Controls Row ─────────────────────────────────────────────────── */
+.crowd-filter-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.crowd-tab-btn {
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-medium);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+
+.crowd-tab-btn.is-active {
+    background: #8B2E2E;
+    border-color: #8B2E2E;
+    color: #FFFFFF !important;
+    font-weight: 700;
+}
+
+.alternatives-toggle-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    border: 1.5px solid #16A34A;
+    background: rgba(22, 163, 74, 0.08);
+    color: #16A34A;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.alternatives-toggle-btn.is-active {
+    background: #16A34A;
+    color: #FFFFFF !important;
+}
+
+/* ── Map & Sidebar Split Layout ──────────────────────────────────────────── */
+.crowd-map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(360px, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.crowd-map-container {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 600px;
+    position: relative;
+    box-shadow: var(--shadow-md);
+}
+
+.crowd-map-leaflet {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Custom Marker Styling */
+.crowd-custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.crowd-marker-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.725rem;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    border: 2px solid #FFFFFF;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.crowd-marker-circle:hover {
+    transform: scale(1.15);
+}
+
+.crowd-marker-pulse {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    animation: markerPulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes markerPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+/* ── Sidebar Cards Column ────────────────────────────────────────────────── */
+.crowd-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Selected Detail Status Card */
+.selected-monastery-card {
+    background: var(--bg-card);
+    border: 2px solid #8B2E2E;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 200ms ease;
+}
+
+.selected-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.selected-monastery-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.selected-occupancy-bar-wrap {
+    margin: 1rem 0;
+}
+
+.selected-occupancy-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 1px solid var(--border-medium);
+}
+
+.selected-occupancy-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 300ms ease;
+}
+
+/* Time Slots Breakdown Table */
+.slots-breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 1.25rem 0;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    border: 1px solid var(--border-subtle);
+}
+
+.slot-row-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+}
+
+.slot-row-item.is-current {
+    background: rgba(139, 46, 46, 0.12);
+    font-weight: 700;
+    border-left: 3px solid #8B2E2E;
+}
+
+/* Key Recommendations Alert Box */
+.crowd-alert-card {
+    background: rgba(220, 38, 38, 0.08);
+    border: 1.5px solid #DC2626;
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin: 1rem 0;
+}
+
+.crowd-alert-title {
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: #DC2626;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+/* Alternative Recommended Monastery Box */
+.alternative-rec-box {
+    background: rgba(22, 163, 74, 0.08);
+    border: 1.5px solid #16A34A;
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin-top: 1rem;
+}
+
+.alt-rec-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.alt-rec-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #16A34A;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Compact monastery list items */
+.compact-monastery-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+
+.compact-monastery-item:hover,
+.compact-monastery-item.is-selected {
+    border-color: #8B2E2E;
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 1024px) {
+    .crowd-map-layout {
+        grid-template-columns: 1fr;
+    }
+    .crowd-map-container {
+        height: 480px;
+    }
+    .crowd-sidebar {
+        max-height: none;
+    }
+}

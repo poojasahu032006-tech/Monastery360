@@ -1,0 +1,621 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MONASTERY360 — Smart Tourist Assistance & Discovery CSS
+   High-contrast government portal styling with red + gold accents
+═══════════════════════════════════════════════════════════════════════════ */
+
+.smart-search-page {
+    padding: 2.5rem 0 5rem;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.smart-search-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.smart-search-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    background: rgba(139, 46, 46, 0.10);
+    color: var(--color-primary);
+    border: 1px solid rgba(139, 46, 46, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.875rem;
+}
+
+.smart-search-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 0.625rem;
+}
+
+.smart-search-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ── Location & Lost Tourist Bar ─────────────────────────────────────────── */
+.location-hub-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.location-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.location-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.location-pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #16A34A;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
+    display: inline-block;
+}
+
+.btn-gps-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #8B2E2E;
+    color: #FFFFFF !important;
+    border: 1px solid #752525;
+    padding: 9px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.btn-gps-action:hover {
+    background: #A53A3A;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 46, 46, 0.3);
+}
+
+/* Quick Hubs list */
+.location-quick-hubs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.quick-hub-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+
+.quick-hub-btn:hover,
+.quick-hub-btn.is-active {
+    background: rgba(139, 46, 46, 0.12);
+    border-color: #8B2E2E;
+    color: #8B2E2E;
+}
+
+/* ── Lost / Need Help Banner ─────────────────────────────────────────────── */
+.lost-tourist-banner {
+    background: linear-gradient(135deg, rgba(139, 46, 46, 0.08) 0%, rgba(244, 208, 111, 0.12) 100%);
+    border: 2px solid rgba(139, 46, 46, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.lost-tourist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.lost-tourist-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lost-quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.lost-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms ease;
+    text-align: center;
+    gap: 6px;
+}
+
+.lost-action-btn:hover,
+.lost-action-btn.is-active {
+    background: #8B2E2E;
+    color: #FFFFFF !important;
+    border-color: #8B2E2E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 46, 46, 0.25);
+}
+
+.lost-action-btn svg {
+    color: inherit;
+}
+
+/* ── Main Search Box ─────────────────────────────────────────────────────── */
+.smart-search-box-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    padding: 8px 16px;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: #8B2E2E;
+    box-shadow: 0 0 0 4px rgba(139, 46, 46, 0.15);
+}
+
+.search-input-main {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    outline: none;
+    padding: 4px 10px;
+}
+
+.search-chips-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.search-chip {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.78125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+
+.search-chip:hover {
+    background: rgba(139, 46, 46, 0.10);
+    border-color: #8B2E2E;
+    color: #8B2E2E;
+}
+
+/* ── Category & Time Slot Filter Controls ────────────────────────────────── */
+.smart-filters-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    background: var(--bg-card);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+}
+
+.category-tabs-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.cat-tab-btn {
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-medium);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+
+.cat-tab-btn.is-active {
+    background: #8B2E2E;
+    border-color: #8B2E2E;
+    color: #FFFFFF !important;
+    font-weight: 700;
+}
+
+.time-slot-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-slot-select {
+    padding: 6px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* ── Results Cards ───────────────────────────────────────────────────────── */
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Monastery Result Card */
+.monastery-smart-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.monastery-smart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #8B2E2E;
+}
+
+.card-img-header {
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-elevated);
+}
+
+.card-img-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-top-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.card-dist-badge {
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(6px);
+    color: #FFFFFF;
+    border: 1px solid rgba(244, 208, 111, 0.5);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-score-badge {
+    background: #8B2E2E;
+    color: #FFFFFF;
+    border: 1px solid rgba(244, 208, 111, 0.5);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.monastery-card-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.monastery-card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+}
+
+.monastery-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+/* Crowd level indicator box */
+.card-crowd-box {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.card-crowd-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+.card-crowd-metrics {
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.card-recommend-reason {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid #8B2E2E;
+    margin-bottom: 1rem;
+    line-height: 1.45;
+}
+
+/* Better Alternative Box */
+.better-alt-box {
+    background: rgba(22, 163, 74, 0.08);
+    border: 1.5px dashed #16A34A;
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-bottom: 1rem;
+}
+
+.better-alt-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #16A34A;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.better-alt-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.better-alt-desc {
+    font-size: 0.78125rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Action Buttons Footer */
+.card-actions-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+}
+
+.btn-card-action {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 7px 12px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 180ms ease;
+}
+
+.btn-card-action--primary {
+    background: #8B2E2E;
+    color: #FFFFFF !important;
+    border: 1px solid #752525;
+}
+
+.btn-card-action--primary:hover {
+    background: #A53A3A;
+}
+
+.btn-card-action--outline {
+    background: transparent;
+    border: 1.5px solid var(--border-medium);
+    color: var(--text-primary);
+}
+
+.btn-card-action--outline:hover {
+    border-color: #8B2E2E;
+    color: #8B2E2E;
+    background: rgba(139, 46, 46, 0.08);
+}
+
+/* ── POI Result Card (Transport, Hospital, Tourist Help) ─────────────────── */
+.poi-smart-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.poi-smart-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: #8B2E2E;
+}
+
+.poi-top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 0.75rem;
+}
+
+.poi-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.poi-type-tag {
+    font-size: 0.725rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+}
+
+.poi-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+}
+
+.poi-status-row {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.poi-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+    .smart-search-title {
+        font-size: 1.75rem;
+    }
+    .lost-quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .smart-filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

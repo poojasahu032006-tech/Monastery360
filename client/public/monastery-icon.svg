@@ -1,0 +1,58 @@
+<svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fav-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A53A3A" />
+      <stop offset="100%" stop-color="#8B2E2E" />
+    </linearGradient>
+    <linearGradient id="fav-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B58B3A" />
+      <stop offset="100%" stop-color="#C5A45A" />
+    </linearGradient>
+  </defs>
+
+  <!-- 360° Outer Orbit Ring -->
+  <circle
+    cx="20"
+    cy="20"
+    r="17.5"
+    stroke="url(#fav-gold)"
+    stroke-width="2.5"
+    stroke-dasharray="92 12"
+    stroke-dashoffset="12"
+    stroke-linecap="round"
+  />
+
+  <!-- Orbit Nodes -->
+  <circle cx="37.5" cy="20" r="2" fill="#B58B3A" />
+  <circle cx="20" cy="37.5" r="1.5" fill="#B58B3A" opacity="0.8" />
+
+  <!-- Monastery Finial Spire -->
+  <path d="M20 4.5 L20 9.5" stroke="url(#fav-gold)" stroke-width="2" stroke-linecap="round" />
+  <circle cx="20" cy="4" r="1.75" fill="url(#fav-gold)" />
+
+  <!-- Upper Monastic Pagoda Roof -->
+  <path
+    d="M12 14.5 C14.5 13, 17.5 10.8, 20 10.8 C22.5 10.8, 25.5 13, 28 14.5 L28.8 15.3 C26.2 14.2, 22.5 13.2, 20 13.2 C17.5 13.2, 13.8 14.2, 11.2 15.3 Z"
+    fill="url(#fav-primary)"
+  />
+
+  <!-- Lower Monastic Pagoda Roof Eaves -->
+  <path
+    d="M7 21 C10.5 19.2, 15.5 16.5, 20 16.5 C24.5 16.5, 29.5 19.2, 33 21 L34 22 C30 20.5, 25 19, 20 19 C15 19, 10 20.5, 6 22 Z"
+    fill="url(#fav-primary)"
+  />
+
+  <!-- Monastic Pillars & Base -->
+  <path
+    d="M13.5 21 V30.5 H26.5 V21"
+    stroke="url(#fav-primary)"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+
+  <!-- Sacred Doorway -->
+  <path
+    d="M17 30.5 V25.5 C17 24, 23 24, 23 25.5 V30.5 Z"
+    fill="url(#fav-gold)"
+  />
+</svg>

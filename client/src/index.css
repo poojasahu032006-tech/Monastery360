@@ -1,48 +1,58 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    MONASTERY360 – Global Design System
-   Himalayan Cultural Tourism – Premium Dark Theme
+   Sikkim Heritage Tourism Portal — Accessible Government Style
 ═══════════════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap');
 
 /* ─── CSS Variables ─────────────────────────────────────────────────────── */
-:root {
-  /* Brand Palette */
-  --color-primary:        #C9873A;   /* Saffron gold */
-  --color-primary-light:  #E8A855;
-  --color-primary-dark:   #A06820;
-  --color-secondary:      #7B5EA7;   /* Buddhist purple */
-  --color-accent:         #E84545;   /* Crimson / prayer flag red */
-  --color-teal:           #2CB5A0;   /* Himalayan teal */
+:root, [data-theme='light'] {
+  /* Light Mode Palette - Official Heritage High Contrast Specs */
+  --bg-primary:       #F8F6F0;
+  --bg-secondary:     #EFE9DC;
+  --surface:          #FFFFFF;
+  --text-primary:     #1E293B; /* High-contrast charcoal navy */
+  --text-secondary:   #334155; /* Slate secondary - clearly readable */
+  --primary:          #8B2E2E; /* Sikkim Heritage Crimson */
+  --primary-dark:     #6F2323;
+  --secondary:        #9A6E1E; /* Rich readable gold */
+  --heritage-green:   #255240;
+  --border:           #CBD5E1;
 
-  /* Backgrounds */
-  --bg-deep:      #0D0F14;
-  --bg-primary:   #12151E;
-  --bg-surface:   #1A1F2C;
-  --bg-elevated:  #232939;
-  --bg-card:      #1E2330;
-  --bg-glass:     rgba(255,255,255,0.04);
+  /* RGB Helper */
+  --primary-rgb:      139, 46, 46;
 
-  /* Text */
-  --text-primary:   #F0EDE8;
-  --text-secondary: #B0A99D;
-  --text-muted:     #6B6460;
-  --text-inverse:   #0D0F14;
+  /* Aliases & Helpers */
+  --color-primary:        var(--primary);
+  --color-primary-light:  #A53A3A;
+  --color-primary-dark:   var(--primary-dark);
+  --color-secondary:      var(--secondary);
+  --color-accent:         #8B2E2E;
+  --color-teal:           var(--heritage-green);
 
-  /* Borders */
-  --border-subtle:  rgba(201,135,58,0.15);
-  --border-medium:  rgba(201,135,58,0.3);
-  --border-strong:  rgba(201,135,58,0.5);
+  --bg-deep:      #EAE4D6;
+  --bg-surface:   var(--surface);
+  --bg-elevated:  #F1ECE1;
+  --bg-card:      var(--surface);
+  --bg-glass:     rgba(255, 255, 255, 0.92);
 
-  /* Shadows */
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
-  --shadow-md:  0 4px 20px rgba(0,0,0,0.4);
-  --shadow-lg:  0 8px 40px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 20px rgba(201,135,58,0.2);
+  --text-muted:     #64748B;
+  --text-inverse:   #FFFFFF;
 
-  /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --border-subtle:  #E2E8F0;
+  --border-medium:  #CBD5E1;
+  --border-strong:  #94A3B8;
+
+  --shadow-sm:  0 2px 6px rgba(15, 23, 42, 0.06);
+  --shadow-md:  0 4px 14px rgba(15, 23, 42, 0.09);
+  --shadow-lg:  0 8px 24px rgba(15, 23, 42, 0.12);
+  --shadow-glow: 0 0 12px rgba(139, 46, 46, 0.15);
+
+  --navbar-bg:    rgba(248, 246, 240, 0.96);
+
+  /* Typography: Professional Indian government / public-service portal standard */
+  --font-display: "Noto Sans", "Segoe UI", Arial, Helvetica, sans-serif;
+  --font-body:    "Noto Sans", "Segoe UI", Arial, Helvetica, sans-serif;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -57,7 +67,7 @@
   --radius-sm:   4px;
   --radius-md:   8px;
   --radius-lg:   12px;
-  --radius-xl:   20px;
+  --radius-xl:   16px;
   --radius-full: 9999px;
 
   /* Transitions */
@@ -71,6 +81,62 @@
   --sidebar-width: 260px;
 }
 
+[data-theme='dark'] {
+  /* Dark Mode Palette - High Contrast Dark Heritage Specs */
+  --dark-bg-primary:     #161A18;
+  --dark-bg-secondary:   #202622;
+  --dark-surface:        #262E29;
+  --dark-text-primary:   #F8FAFC;
+  --dark-text-secondary: #E2E8F0;
+  --dark-primary:        #C75B5B;
+  --dark-secondary:      #F4D06F;
+  --dark-green:          #689A80;
+  --dark-border:         #3E4842;
+
+  /* RGB Helper */
+  --primary-rgb:      199, 91, 91;
+
+  /* Standard Theme Variables mapped directly to Dark Heritage Palette */
+  --bg-primary:       var(--dark-bg-primary);
+  --bg-secondary:     var(--dark-bg-secondary);
+  --surface:          var(--dark-surface);
+  --text-primary:     var(--dark-text-primary);
+  --text-secondary:   var(--dark-text-secondary);
+  --primary:          var(--dark-primary);
+  --primary-dark:     #A53A3A;
+  --secondary:        var(--dark-secondary);
+  --heritage-green:   var(--dark-green);
+  --border:           var(--dark-border);
+
+  /* Component Helpers & Legacy Aliases */
+  --color-primary:        var(--dark-primary);
+  --color-primary-light:  #D97777;
+  --color-primary-dark:   #A53A3A;
+  --color-secondary:      var(--dark-secondary);
+  --color-accent:         #D97777;
+  --color-teal:           var(--dark-green);
+
+  --bg-deep:      var(--dark-bg-secondary);
+  --bg-surface:   var(--dark-surface);
+  --bg-elevated:  #202622;
+  --bg-card:      var(--dark-surface);
+  --bg-glass:     rgba(38, 46, 41, 0.85);
+
+  --text-muted:     #94A3B8;
+  --text-inverse:   #F8FAFC;
+
+  --border-subtle:  var(--dark-border);
+  --border-medium:  #505C55;
+  --border-strong:  #687870;
+
+  --shadow-sm:  0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg:  0 8px 30px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 15px rgba(199, 91, 91, 0.25);
+
+  --navbar-bg:    rgba(22, 26, 24, 0.95);
+}
+
 /* ─── Reset ──────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -82,6 +148,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
 
@@ -89,10 +156,15 @@ img, svg, video { display: block; max-width: 100%; }
 
 a { color: inherit; text-decoration: none; }
 
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+}
 
 input, select, textarea {
-  font-family: inherit;
+  font-family: var(--font-body);
   color: inherit;
   background: none;
   border: none;
@@ -101,10 +173,23 @@ input, select, textarea {
 
 ul, ol { list-style: none; }
 
-/* ─── Typography ─────────────────────────────────────────────────────────── */
-.font-display { font-family: var(--font-display); }
+/* ─── Typography Hierarchy ───────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
 
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.3; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+p {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+}
 
 /* ─── Layout utilities ───────────────────────────────────────────────────── */
 .container {
@@ -128,12 +213,22 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.3; }
 ::-webkit-scrollbar-thumb { background: var(--color-primary-dark); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
-/* ─── Gold gradient text ─────────────────────────────────────────────────── */
+/* ─── High Contrast Gradient text fallback ──────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary), var(--color-primary-dark));
+  background: linear-gradient(135deg, #8B2E2E, #B58B3A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: #8B2E2E; /* Fallback */
+  font-weight: 800;
+}
+
+[data-theme='dark'] .gradient-text {
+  background: linear-gradient(135deg, #F4D06F, #E28B8B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #F4D06F;
 }
 
 /* ─── Glass card ─────────────────────────────────────────────────────────── */
@@ -163,8 +258,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.3; }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(201,135,58,0.3); }
-  50%       { box-shadow: 0 0 30px rgba(201,135,58,0.6); }
+  0%, 100% { box-shadow: 0 0 10px rgba(181, 139, 58, 0.3); }
+  50%       { box-shadow: 0 0 30px rgba(181, 139, 58, 0.6); }
 }
 
 @keyframes shimmer {

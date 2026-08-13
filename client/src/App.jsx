@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import MainLayout from './layouts/MainLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Loading from './components/UI/Loading';
@@ -19,9 +20,11 @@ import Archives from './pages/Archives/Archives';
 
 import MonasteryDetail from './pages/Explore/MonasteryDetail';
 import MyBookings from './pages/Bookings/MyBookings';
+import SmartSearch from './pages/SmartSearch/SmartSearch';
+import CrowdHeatmap from './pages/Crowd/CrowdHeatmap';
 import {
-    Crowd, VirtualTour,
-    SmartSearch, Recommendations, TravelGuide,
+    VirtualTour,
+    Recommendations, TravelGuide,
     Bookings, Reviews,
     AudioGuide, Offline, Contribute, AdminDashboard,
     NotFound,
@@ -29,8 +32,9 @@ import {
 
 export default function App() {
     return (
-        <AuthProvider>
-            <MainLayout>
+        <ThemeProvider>
+            <AuthProvider>
+                <MainLayout>
                 <Suspense fallback={<Loading fullScreen />}>
                     <Routes>
                         {/* Public */}
@@ -42,7 +46,7 @@ export default function App() {
                         <Route path="/explore" element={<Explore />} />
                         <Route path="/explore/:id" element={<MonasteryDetail />} />
                         <Route path="/map" element={<Map />} />
-                        <Route path="/crowd" element={<Crowd />} />
+                        <Route path="/crowd" element={<CrowdHeatmap />} />
                         <Route path="/virtual-tour" element={<VirtualTour />} />
                         <Route path="/search" element={<SmartSearch />} />
                         <Route path="/travel-guide" element={<TravelGuide />} />
@@ -74,5 +78,6 @@ export default function App() {
                 </Suspense>
             </MainLayout>
         </AuthProvider>
+    </ThemeProvider>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Bell, CheckCheck } from 'lucide-react';
+import { Bell, CheckCheck, PartyPopper, XCircle, Clock, Megaphone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import notificationService from '../../services/notificationService';
@@ -7,10 +7,10 @@ import notificationService from '../../services/notificationService';
 const POLL_INTERVAL_MS = 30000; // 30 seconds
 
 const NOTIF_ICONS = {
-    booking_success: '🎉',
-    booking_cancelled: '🚫',
-    event_reminder: '⏰',
-    event_update: '📢',
+    booking_success: <PartyPopper size={18} style={{ color: '#4ADE80' }} />,
+    booking_cancelled: <XCircle size={18} style={{ color: '#EF4444' }} />,
+    event_reminder: <Clock size={18} style={{ color: 'var(--color-secondary)' }} />,
+    event_update: <Megaphone size={18} style={{ color: 'var(--color-primary)' }} />,
 };
 
 export default function NotificationBell() {
@@ -105,7 +105,7 @@ export default function NotificationBell() {
                     height: '38px',
                     borderRadius: 'var(--radius-md)',
                     border: '1px solid var(--border-subtle)',
-                    background: panelOpen ? 'var(--bg-glass)' : 'rgba(255, 255, 255, 0.03)',
+                    background: panelOpen ? 'var(--bg-glass)' : 'var(--bg-elevated)',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     color: unreadCount > 0 ? 'var(--color-primary-light)' : 'var(--text-secondary)',
@@ -186,7 +186,7 @@ export default function NotificationBell() {
                                     style={{
                                         fontSize: '0.75rem',
                                         color: 'var(--color-primary-light)',
-                                        background: 'rgba(201, 135, 58, 0.15)',
+                                        background: 'rgba(var(--primary-rgb), 0.15)',
                                         padding: '2px 8px',
                                         borderRadius: 'var(--radius-full)',
                                         fontWeight: 700,
@@ -254,12 +254,12 @@ export default function NotificationBell() {
                                         cursor: 'pointer',
                                         background: notif.read
                                             ? 'transparent'
-                                            : 'rgba(201, 135, 58, 0.06)',
+                                            : 'rgba(var(--primary-rgb), 0.06)',
                                         transition: 'background 0.15s ease',
                                     }}
                                 >
-                                    <span style={{ fontSize: '1.25rem', flexShrink: 0, lineHeight: 1.4 }}>
-                                        {NOTIF_ICONS[notif.type] || '🔔'}
+                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                                        {NOTIF_ICONS[notif.type] || <Bell size={18} style={{ color: 'var(--color-primary)' }} />}
                                     </span>
                                     <div style={{ flex: 1, minWidth: 0 }}>
                                         <div

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Scroll, Image as ImageIcon, Box, Lock, Search } from 'lucide-react';
+import { BookOpen, Scroll, Image as ImageIcon, Box, Lock, Search, Landmark, Palette, Layers } from 'lucide-react';
 import '../pages.css';
 
 const ARCHIVE_ITEMS = [
@@ -9,7 +9,7 @@ const ARCHIVE_ITEMS = [
         category: 'Ancient Manuscripts',
         monastery: 'Rumtek Monastery',
         period: '17th Century',
-        emoji: '📜',
+        emoji: <Scroll size={40} style={{ color: 'var(--color-primary)' }} />,
         desc: 'Hand-written gold and silver ink Buddhist canonical texts preserved in silk wrappers.',
     },
     {
@@ -18,7 +18,7 @@ const ARCHIVE_ITEMS = [
         category: 'Architectural Artifacts',
         monastery: 'Pemayangtse Monastery',
         period: '18th Century',
-        emoji: '🏛️',
+        emoji: <Landmark size={40} style={{ color: 'var(--color-primary)' }} />,
         desc: 'Seven-tiered carved wooden structure depicting Zangdok Palri (Guru Rinpoche\'s heavenly palace).',
     },
     {
@@ -27,7 +27,7 @@ const ARCHIVE_ITEMS = [
         category: 'Murals & Thangkas',
         monastery: 'Phodong Monastery',
         period: '18th Century',
-        emoji: '🎨',
+        emoji: <Palette size={40} style={{ color: 'var(--color-primary)' }} />,
         desc: 'High-resolution digitized wall paintings depicting Wheel of Life and deity mandalas.',
     },
     {
@@ -36,7 +36,7 @@ const ARCHIVE_ITEMS = [
         category: 'Ancient Manuscripts',
         monastery: 'Tashiding Monastery',
         period: '17th - 19th Century',
-        emoji: '🪵',
+        emoji: <Layers size={40} style={{ color: 'var(--color-primary)' }} />,
         desc: 'Carved wooden blocks used for printing Tibetan prayer flags and holy mantras.',
     },
 ];
@@ -126,12 +126,11 @@ export default function Archives() {
                     <div key={item.id} className="card card--hover" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                         <div style={{
                             height: '130px',
-                            background: 'radial-gradient(circle, rgba(201,135,58,0.15) 0%, rgba(13,15,20,0.9) 100%)',
+                            background: 'radial-gradient(circle, rgba(var(--primary-rgb), 0.18) 0%, var(--bg-elevated) 100%)',
                             borderRadius: 'var(--radius-md)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            fontSize: '3rem',
                             marginBottom: '1rem',
                         }}>
                             {item.emoji}
@@ -145,8 +144,8 @@ export default function Archives() {
                             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
                                 {item.title}
                             </h3>
-                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                                🏛️ {item.monastery}
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <Landmark size={13} style={{ color: 'var(--color-primary)' }} /> {item.monastery}
                             </p>
                             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
                                 {item.desc}

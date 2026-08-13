@@ -1,5 +1,8 @@
 import React from 'react';
+import { AlertTriangle, Search } from 'lucide-react';
+import { LogoIcon } from './Logo';
 import './UI.css';
+export { default as Logo, LogoIcon } from './Logo';
 
 /* ── Button ──────────────────────────────────────────────────────────────── */
 export function Button({
@@ -69,7 +72,7 @@ export function Select({ label, error, id, children, className = '', ...props })
 export function SearchBar({ placeholder = 'Search...', onSearch, id = 'search-bar', ...props }) {
     return (
         <div className="search-bar">
-            <span className="search-icon" aria-hidden="true">🔍</span>
+            <span className="search-icon" aria-hidden="true"><Search size={18} /></span>
             <input
                 id={id}
                 type="search"
@@ -83,10 +86,12 @@ export function SearchBar({ placeholder = 'Search...', onSearch, id = 'search-ba
 }
 
 /* ── EmptyState ──────────────────────────────────────────────────────────── */
-export function EmptyState({ icon = '🏯', title = 'Nothing here yet', message = '' }) {
+export function EmptyState({ icon, title = 'Nothing here yet', message = '' }) {
     return (
         <div className="empty-state">
-            <span className="empty-state-icon">{icon}</span>
+            <div className="empty-state-icon" style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}>
+                {icon || <LogoIcon size={44} />}
+            </div>
             <h3 className="empty-state-title">{title}</h3>
             {message && <p className="empty-state-message">{message}</p>}
         </div>
@@ -97,7 +102,9 @@ export function EmptyState({ icon = '🏯', title = 'Nothing here yet', message 
 export function ErrorState({ title = 'Something went wrong', message = '', onRetry }) {
     return (
         <div className="error-state">
-            <span className="error-state-icon">⚠️</span>
+            <div className="error-state-icon" style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}>
+                <AlertTriangle size={44} style={{ color: '#EF4444' }} />
+            </div>
             <h3 className="error-state-title">{title}</h3>
             {message && <p className="error-state-message">{message}</p>}
             {onRetry && (

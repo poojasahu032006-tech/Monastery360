@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Compass, Shield, ChevronRight, Star, Video, Calendar, RefreshCw } from 'lucide-react';
+import { Search, MapPin, Compass, Shield, ChevronRight, Star, Video, Calendar, RefreshCw, Landmark, Mountain, MountainSnow, Snowflake, Trees } from 'lucide-react';
 import monasteryService from '../../services/monasteryService';
 import Loading from '../../components/UI/Loading';
 import '../pages.css';
+import '../FeatureCard.css';
 
 const DISTRICTS = [
-    { id: 'all', name: 'All Districts', count: '10 Monasteries', desc: 'Across Sikkim', icon: '🏛️' },
-    { id: 'East Sikkim', name: 'East Sikkim', count: 'Gangtok & Hubs', desc: 'Rumtek, Enchey, Lingdum', icon: '⛰️' },
-    { id: 'West Sikkim', name: 'West Sikkim', count: 'Historic Heart', desc: 'Pemayangtse, Tashiding, Dubdi', icon: '🏔️' },
-    { id: 'North Sikkim', name: 'North Sikkim', count: 'High Altitude', desc: 'Phodong, Lachen', icon: '❄️' },
-    { id: 'South Sikkim', name: 'South Sikkim', count: 'Serene Hills', desc: 'Ralang & Ravangla', icon: '🌿' },
+    { id: 'all', name: 'All Districts', count: '10 Monasteries', desc: 'Across Sikkim', icon: Landmark,
+      image: '/images/lingdum.jpg', imageFocus: 'center 50%' },
+    { id: 'East Sikkim', name: 'East Sikkim', count: 'Gangtok & Hubs', desc: 'Rumtek, Enchey, Lingdum', icon: Mountain,
+      image: '/images/sangaChoeling.jpg', imageFocus: 'center 35%' },
+    { id: 'West Sikkim', name: 'West Sikkim', count: 'Historic Heart', desc: 'Pemayangtse, Tashiding, Dubdi', icon: MountainSnow,
+      image: '/images/pemayangtse.jpg', imageFocus: 'center 55%' },
+    { id: 'North Sikkim', name: 'North Sikkim', count: 'High Altitude', desc: 'Phodong, Lachen', icon: Snowflake,
+      image: '/images/lachen.jpg', imageFocus: 'center 40%' },
+    { id: 'South Sikkim', name: 'South Sikkim', count: 'Serene Hills', desc: 'Ralang & Ravangla', icon: Trees,
+      image: '/images/ralang.jpg', imageFocus: 'center 40%' },
 ];
 
 const TAG_OPTIONS = [
@@ -132,44 +138,45 @@ export default function Explore() {
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '1rem' }}>
                     Filter by District
                 </h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.875rem' }}>
-                    {DISTRICTS.map((d) => (
-                        <div
-                            key={d.id}
-                            onClick={() => setSelectedDistrict(selectedDistrict === d.id ? 'all' : d.id)}
-                            className="card card--hover"
-                            style={{
-                                cursor: 'pointer',
-                                border: selectedDistrict === d.id ? '1px solid var(--color-primary)' : '1px solid var(--border-subtle)',
-                                background: selectedDistrict === d.id ? 'rgba(201, 135, 58, 0.12)' : 'var(--bg-card)',
-                                padding: '1rem',
-                            }}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                                <span style={{ fontSize: '1.5rem' }}>{d.icon}</span>
-                                <span style={{
-                                    fontSize: '0.7rem',
-                                    fontWeight: 600,
-                                    color: 'var(--color-primary)',
-                                    background: 'rgba(201, 135, 58, 0.15)',
-                                    padding: '3px 8px',
-                                    borderRadius: 'var(--radius-full)'
-                                }}>
-                                    {d.count}
-                                </span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '0.875rem' }}>
+                    {DISTRICTS.map((d) => {
+                        const Icon = d.icon;
+                        const isActive = selectedDistrict === d.id;
+                        return (
+                            <div
+                                key={d.id}
+                                onClick={() => setSelectedDistrict(selectedDistrict === d.id ? 'all' : d.id)}
+                                className={`feat-card feat-card--district${isActive ? ' is-active' : ''}`}
+                                style={{
+                                    backgroundImage: `url('${d.image}')`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: d.imageFocus,
+                                    backgroundRepeat: 'no-repeat',
+                                    cursor: 'pointer',
+                                }}
+                                role="button"
+                                aria-pressed={isActive}
+                            >
+                                <div className="feat-card__overlay" />
+                                <div className="feat-card__body">
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                                        <div className="feat-card__icon">
+                                            <Icon size={18} strokeWidth={1.75} />
+                                        </div>
+                                        <span className="feat-card__badge">{d.count}</span>
+                                    </div>
+                                    <h3 className="feat-card__title">{d.name}</h3>
+                                    <p className="feat-card__desc">{d.desc}</p>
+                                </div>
                             </div>
-                            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-                                {d.name}
-                            </h3>
-                            <p style={{ fontSize: '0.78125rem', color: 'var(--text-muted)' }}>{d.desc}</p>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
 
             {/* Tag / Category Filter Tabs */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '2rem' }}>
-                <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginRight: '4px' }}>Category:</span>
+                <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginRight: '4px' }}>Category:</span>
                 {TAG_OPTIONS.map((t) => (
                     <button
                         key={t.id}
@@ -178,10 +185,10 @@ export default function Explore() {
                             padding: '6px 14px',
                             borderRadius: 'var(--radius-full)',
                             fontSize: '0.8125rem',
-                            fontWeight: 500,
-                            border: selectedTag === t.id ? '1px solid var(--color-primary)' : '1px solid var(--border-subtle)',
+                            fontWeight: 600,
+                            border: selectedTag === t.id ? '1px solid var(--color-primary)' : '1px solid var(--border-medium)',
                             background: selectedTag === t.id ? 'var(--color-primary)' : 'var(--bg-card)',
-                            color: selectedTag === t.id ? 'var(--text-inverse)' : 'var(--text-secondary)',
+                            color: selectedTag === t.id ? '#FFFFFF' : 'var(--text-primary)',
                             cursor: 'pointer',
                             transition: 'all var(--transition-fast)',
                         }}
@@ -197,8 +204,9 @@ export default function Explore() {
                             padding: '6px 12px',
                             borderRadius: 'var(--radius-full)',
                             fontSize: '0.8125rem',
+                            fontWeight: 600,
                             background: 'transparent',
-                            border: '1px dashed var(--color-primary)',
+                            border: '1.5px dashed var(--color-primary)',
                             color: 'var(--color-primary)',
                             cursor: 'pointer',
                             display: 'flex',
@@ -216,34 +224,26 @@ export default function Explore() {
             {loading ? (
                 <div style={{ padding: '4rem', textAlign: 'center' }}>
                     <Loading />
-                    <p style={{ color: 'var(--text-muted)', marginTop: '1rem' }}>Loading monastery catalogue from database...</p>
+                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontWeight: 500 }}>Loading monastery catalogue from database...</p>
                 </div>
             ) : error ? (
                 <div className="card" style={{ textAlign: 'center', padding: '3rem', border: '1px solid rgba(232,69,69,0.3)', background: 'rgba(232,69,69,0.05)' }}>
-                    <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Failed to load catalogue</h3>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>{error}</p>
-                    <button onClick={fetchMonasteries} className="btn-primary" style={{ padding: '8px 18px' }}>
+                    <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem', fontWeight: 700 }}>Failed to load catalogue</h3>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>{error}</p>
+                    <button onClick={fetchMonasteries} className="btn btn--primary btn--md" style={{ padding: '8px 18px' }}>
                         Try Again
                     </button>
                 </div>
             ) : monasteries.length === 0 ? (
                 <div className="card" style={{ textAlign: 'center', padding: '3.5rem', background: 'var(--bg-card)' }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                    <Search size={44} style={{ color: 'var(--color-primary)', marginBottom: '1rem' }} />
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                         No Monasteries Found
                     </h3>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', maxWidth: '420px', margin: '0 auto 1.5rem' }}>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', maxWidth: '420px', margin: '0 auto 1.5rem' }}>
                         We couldn't find any monasteries matching your search parameters. Try adjusting your district or search filter.
                     </p>
-                    <button onClick={handleReset} style={{
-                        padding: '8px 20px',
-                        background: 'var(--color-primary)',
-                        color: 'var(--text-inverse)',
-                        border: 'none',
-                        borderRadius: 'var(--radius-full)',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                    }}>
+                    <button onClick={handleReset} className="btn btn--primary btn--md">
                         Reset All Filters
                     </button>
                 </div>
@@ -265,45 +265,47 @@ export default function Explore() {
                                         position: 'absolute',
                                         top: '12px',
                                         left: '12px',
-                                        background: 'rgba(26, 31, 44, 0.85)',
-                                        backdropFilter: 'blur(4px)',
-                                        color: 'var(--color-primary-light)',
+                                        background: 'rgba(15, 23, 42, 0.85)',
+                                        backdropFilter: 'blur(6px)',
+                                        color: '#FFFFFF',
                                         padding: '4px 10px',
                                         borderRadius: 'var(--radius-full)',
                                         fontSize: '0.75rem',
-                                        fontWeight: 600,
+                                        fontWeight: 700,
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '4px',
+                                        border: '1px solid rgba(244, 208, 111, 0.4)',
                                     }}>
-                                        <MapPin size={12} /> {m.district}
+                                        <MapPin size={12} style={{ color: '#F4D06F' }} /> {m.district}
                                     </span>
 
                                     {/* Badges */}
                                     <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '6px' }}>
                                         {m.virtualTourAvailable && (
                                             <span style={{
-                                                background: 'rgba(201, 135, 58, 0.9)',
-                                                color: '#fff',
+                                                background: '#8B2E2E',
+                                                color: '#FFFFFF',
                                                 padding: '4px 8px',
                                                 borderRadius: 'var(--radius-full)',
                                                 fontSize: '0.7rem',
-                                                fontWeight: 600,
+                                                fontWeight: 700,
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '4px',
+                                                border: '1px solid rgba(244, 208, 111, 0.4)',
                                             }}>
                                                 <Video size={10} /> 360° VR
                                             </span>
                                         )}
                                         {m.bookingAvailable && (
                                             <span style={{
-                                                background: 'rgba(74, 144, 226, 0.9)',
-                                                color: '#fff',
+                                                background: 'var(--heritage-green)',
+                                                color: '#FFFFFF',
                                                 padding: '4px 8px',
                                                 borderRadius: 'var(--radius-full)',
                                                 fontSize: '0.7rem',
-                                                fontWeight: 600,
+                                                fontWeight: 700,
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '4px',
@@ -317,24 +319,24 @@ export default function Explore() {
                                 {/* Body */}
                                 <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                                        <span style={{ fontSize: '0.75rem', color: 'var(--color-primary)', fontWeight: 600 }}>
+                                        <span style={{ fontSize: '0.78125rem', color: 'var(--color-primary)', fontWeight: 700 }}>
                                             Est. {m.establishedYear || 'Historic'}
                                         </span>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                                            <Star size={14} fill="var(--color-primary)" color="var(--color-primary)" />
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                                            <Star size={14} fill="#B58B3A" color="#B58B3A" />
                                             <span>{m.rating || 4.5}</span>
-                                            <span style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '0.75rem' }}>({m.reviewCount || 0})</span>
+                                            <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.75rem' }}>({m.reviewCount || 0})</span>
                                         </div>
                                     </div>
 
-                                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+                                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
                                         {m.name}
                                     </h3>
 
                                     <p style={{
-                                        fontSize: '0.85rem',
-                                        color: 'var(--text-muted)',
-                                        lineHeight: '1.5',
+                                        fontSize: '0.875rem',
+                                        color: 'var(--text-secondary)',
+                                        lineHeight: '1.55',
                                         marginBottom: '1rem',
                                         display: '-webkit-box',
                                         WebkitLineClamp: 2,
@@ -348,12 +350,13 @@ export default function Explore() {
                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '1.25rem', marginTop: 'auto' }}>
                                         {(m.tags || []).slice(0, 3).map((tag) => (
                                             <span key={tag} style={{
-                                                fontSize: '0.7rem',
-                                                padding: '2px 8px',
+                                                fontSize: '0.725rem',
+                                                fontWeight: 600,
+                                                padding: '3px 8px',
                                                 borderRadius: 'var(--radius-sm)',
-                                                background: 'rgba(255,255,255,0.05)',
-                                                border: '1px solid var(--border-subtle)',
-                                                color: 'var(--text-secondary)',
+                                                background: 'var(--bg-elevated)',
+                                                border: '1px solid var(--border-medium)',
+                                                color: 'var(--text-primary)',
                                             }}>
                                                 {tag}
                                             </span>
@@ -368,18 +371,17 @@ export default function Explore() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                     }}>
-                                        <span style={{ fontSize: '0.78125rem', color: 'var(--text-muted)' }}>
+                                        <span style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                                             {m.address?.split(',')[0] || m.district}
                                         </span>
                                         <Link to={`/explore/${m._id}`} style={{ textDecoration: 'none' }}>
-                                            <button className="btn-ghost-sm" style={{
+                                            <button className="btn btn--outline btn--sm" style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '4px',
                                                 fontSize: '0.8125rem',
-                                                color: 'var(--color-primary)',
-                                                fontWeight: 600,
-                                                padding: '4px 10px',
+                                                fontWeight: 700,
+                                                padding: '5px 12px',
                                                 cursor: 'pointer',
                                             }}>
                                                 View Details <ChevronRight size={14} />
@@ -396,7 +398,7 @@ export default function Explore() {
             {/* Heritage Notice Banner */}
             <div className="card" style={{
                 border: '1px dashed var(--border-subtle)',
-                background: 'rgba(201, 135, 58, 0.04)',
+                background: 'rgba(var(--primary-rgb), 0.04)',
                 textAlign: 'center',
                 padding: '1.75rem',
             }}>

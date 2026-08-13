@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../UI/Logo';
 import './Footer.css';
 
 const FOOTER_LINKS = {
@@ -31,10 +32,9 @@ export default function Footer() {
         <footer className="footer" role="contentinfo">
             <div className="footer-inner container">
                 <div className="footer-brand">
-                    <Link to="/" className="footer-logo" aria-label="Monastery360 Home">
-                        <span>🏯</span>
-                        <span className="footer-logo-text">Monastery<span className="gradient-text">360</span></span>
-                    </Link>
+                    <div style={{ marginBottom: '1rem' }}>
+                        <Logo size="md" />
+                    </div>
                     <p className="footer-tagline">
                         Digitize, Explore and Preserve<br />
                         Sikkim's Monastery Heritage

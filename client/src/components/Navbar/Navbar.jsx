@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Menu, X, User, LogOut, ChevronDown, Calendar } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { Menu, X, User, LogOut, ChevronDown, Calendar, Sun, Moon } from 'lucide-react';
 import NotificationBell from '../NotificationBell/NotificationBell';
+import Logo from '../UI/Logo';
 import toast from 'react-hot-toast';
 import './Navbar.css';
 
 const NAV_LINKS = [
     { label: 'Home', to: '/' },
     { label: 'Explore', to: '/explore' },
+    { label: 'Smart Search', to: '/search' },
+    { label: 'Crowd Heatmap', to: '/crowd' },
     { label: 'Map', to: '/map' },
     { label: 'Events', to: '/events' },
     { label: 'Calendar', to: '/calendar' },
@@ -18,6 +22,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
     const { user, isAuthenticated, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
@@ -44,10 +49,7 @@ export default function Navbar() {
         <nav className="navbar" role="navigation" aria-label="Main navigation">
             <div className="navbar-inner container">
                 {/* Logo */}
-                <Link to="/" className="navbar-logo" aria-label="Monastery360 Home">
-                    <span className="navbar-logo-icon">🏯</span>
-                    <span className="navbar-logo-text">Monastery<span className="gradient-text">360</span></span>
-                </Link>
+                <Logo size="md" />
 
                 {/* Desktop Links */}
                 <ul className="navbar-links" aria-label="Site navigation">
@@ -65,10 +67,23 @@ export default function Navbar() {
 
                 {/* Auth section */}
                 <div className="navbar-auth">
-                    {isAuthenticated ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                            <NotificationBell />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <button
+                            type="button"
+                            className="theme-toggle-btn"
+                            onClick={toggleTheme}
+                            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                            title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                        >
+                            {theme === 'light' ? (
+                                <Sun size={18} className="theme-toggle-icon" />
+                            ) : (
+                                <Moon size={18} className="theme-toggle-icon" />
+                            )}
+                        </button>
+                        {isAuthenticated ? (
                             <div className="navbar-profile" ref={dropdownRef}>
+                                <NotificationBell />
                                 <button
                                     id="profile-menu-btn"
                                     className="navbar-profile-btn"
@@ -100,17 +115,30 @@ export default function Navbar() {
                                     </div>
                                 )}
                             </div>
-                        </div>
-                    ) : (
-                        <div className="navbar-cta">
-                            <Link to="/login" className="btn-ghost-sm">Login</Link>
-                            <Link to="/register" className="btn-primary-sm" id="nav-register-btn">Register</Link>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="navbar-cta">
+                                <Link to="/login" className="btn-ghost-sm">Login</Link>
+                                <Link to="/register" className="btn-primary-sm" id="nav-register-btn">Register</Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Mobile controls */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
+                <div className="mobile-controls-wrapper">
+                    <button
+                        type="button"
+                        className="theme-toggle-btn mobile-theme-btn"
+                        onClick={toggleTheme}
+                        aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                        title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                    >
+                        {theme === 'light' ? (
+                            <Sun size={18} className="theme-toggle-icon" />
+                        ) : (
+                            <Moon size={18} className="theme-toggle-icon" />
+                        )}
+                    </button>
                     {isAuthenticated && (
                         <div className="mobile-bell-wrapper">
                             <NotificationBell />

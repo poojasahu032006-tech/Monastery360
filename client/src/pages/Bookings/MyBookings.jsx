@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar as CalendarIcon, MapPin, Sparkles, Clock, X, Info, Phone, Mail, User, ShieldAlert, ExternalLink } from 'lucide-react';
+import { Calendar as CalendarIcon, MapPin, Sparkles, Clock, X, Info, Phone, Mail, User, ShieldAlert, ExternalLink, Users, AlertTriangle, Ticket } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import bookingService from '../../services/bookingService';
+import { getSavedExperienceBookings } from '../../data/monasteryBookingData';
 import Loading from '../../components/UI/Loading';
 import toast from 'react-hot-toast';
 import '../pages.css';
@@ -13,7 +14,7 @@ import '../pages.css';
  */
 function buildGoogleCalendarUrl(booking) {
     // Parse known event date strings into start/end Date objects
-    const dateStr = booking.eventDate.toLowerCase();
+    const dateStr = (booking.eventDate || '').toLowerCase();
     let startDate, endDate;
 
     if (dateStr.includes('feb 12')) {
@@ -31,6 +32,9 @@ function buildGoogleCalendarUrl(booking) {
     } else if (dateStr.includes('nov 1')) {
         startDate = new Date('2026-11-01T09:00:00');
         endDate   = new Date('2026-11-01T18:00:00');
+    } else if (booking.dateIso) {
+        startDate = new Date(booking.dateIso + 'T09:00:00');
+        endDate   = new Date(booking.dateIso + 'T11:00:00');
     } else {
         startDate = new Date();
         endDate   = new Date(Date.now() + 3600000);
@@ -39,10 +43,10 @@ function buildGoogleCalendarUrl(booking) {
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const params = new URLSearchParams({
         action: 'TEMPLATE',
-        text: booking.eventName,
+        text: booking.eventName || booking.experienceTitle,
         dates: `${fmt(startDate)}/${fmt(endDate)}`,
-        location: booking.location,
-        details: `Monastery360 Booking ID: ${booking.bookingId}\nAttendees: ${booking.attendees}\n\n${booking.message || ''}`.trim(),
+        location: booking.location || booking.monasteryName,
+        details: `Monastery360 Booking ID: ${booking.bookingId}\nAttendees: ${booking.attendees}\nTime Slot: ${booking.timeSlot || 'Standard'}\n\n${booking.message || ''}`.trim(),
     });
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
@@ -61,12 +65,19 @@ export default function MyBookings() {
     const fetchBookings = async () => {
         setLoading(true);
         setError(null);
+        const localExpBookings = getSavedExperienceBookings();
         try {
             const res = await bookingService.getAll();
-            setBookings(res.data || []);
+            const backendBookings = res.data || [];
+            // Merge local experience bookings and backend event bookings
+            setBookings([...localExpBookings, ...backendBookings]);
         } catch (err) {
-            console.error('Error fetching bookings:', err);
-            setError(err.response?.data?.message || 'Unable to connect to the bookings service.');
+            console.warn('Backend bookings unavailable, using local bookings:', err);
+            if (localExpBookings.length > 0) {
+                setBookings(localExpBookings);
+            } else {
+                setBookings([]);
+            }
         } finally {
             setLoading(false);
         }
@@ -80,19 +91,37 @@ export default function MyBookings() {
         if (!activeCancel) return;
         setCancelLoading(true);
         try {
-            const response = await bookingService.cancel(activeCancel._id);
-            if (response.success) {
-                // Update booking status locally
+            // Check if it's a local experience booking
+            if (activeCancel._id && String(activeCancel._id).startsWith('exp_')) {
+                // Update in localStorage
+                try {
+                    const stored = getSavedExperienceBookings();
+                    const updated = stored.map(b => b._id === activeCancel._id ? { ...b, status: 'cancelled' } : b);
+                    localStorage.setItem('monastery360_experience_bookings', JSON.stringify(updated));
+                } catch (e) {
+                    console.error('Error updating local storage:', e);
+                }
                 setBookings(prev =>
                     prev.map(b => (b._id === activeCancel._id ? { ...b, status: 'cancelled' } : b))
                 );
-                // Also update detail modal if it is currently open
                 if (activeDetail && activeDetail._id === activeCancel._id) {
                     setActiveDetail(prev => ({ ...prev, status: 'cancelled' }));
                 }
-                toast.success('Booking cancelled successfully.');
+                toast.success('Experience booking cancelled successfully.');
             } else {
-                toast.error(response.message || 'Failed to cancel booking.');
+                // Backend booking cancellation
+                const response = await bookingService.cancel(activeCancel._id);
+                if (response.success) {
+                    setBookings(prev =>
+                        prev.map(b => (b._id === activeCancel._id ? { ...b, status: 'cancelled' } : b))
+                    );
+                    if (activeDetail && activeDetail._id === activeCancel._id) {
+                        setActiveDetail(prev => ({ ...prev, status: 'cancelled' }));
+                    }
+                    toast.success('Booking cancelled successfully.');
+                } else {
+                    toast.error(response.message || 'Failed to cancel booking.');
+                }
             }
         } catch (err) {
             console.error('Cancellation error:', err);
@@ -110,7 +139,7 @@ export default function MyBookings() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(13, 15, 20, 0.85)',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
         backdropFilter: 'blur(8px)',
         display: 'flex',
         alignItems: 'center',
@@ -163,7 +192,7 @@ export default function MyBookings() {
             ) : bookings.length === 0 ? (
                 /* Styled Empty State */
                 <div className="card" style={{ textAlign: 'center', padding: '4rem 2rem', maxWidth: '600px', margin: '0 auto', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
-                    <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>📅</div>
+                    <CalendarIcon size={48} style={{ color: 'var(--color-primary)', marginBottom: '1rem' }} />
                     <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                         No Bookings Yet
                     </h2>
@@ -194,7 +223,7 @@ export default function MyBookings() {
                             <div
                                 key={booking._id}
                                 className="card card--hover"
-                                style={{ display: 'flex', flexDirection: 'column', height: '100%', border: isConfirmed ? '1px solid var(--border-subtle)' : '1px solid rgba(255,255,255,0.05)', opacity: isConfirmed ? 1 : 0.7 }}
+                                style={{ display: 'flex', flexDirection: 'column', height: '100%', border: '1px solid var(--border-subtle)', opacity: isConfirmed ? 1 : 0.75 }}
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', letterSpacing: '0.5px' }}>
@@ -206,15 +235,15 @@ export default function MyBookings() {
                                         textTransform: 'uppercase',
                                         padding: '4px 10px',
                                         borderRadius: 'var(--radius-full)',
-                                        background: isConfirmed ? 'rgba(74,222,128,0.15)' : 'rgba(239,68,68,0.15)',
-                                        color: isConfirmed ? '#4ADE80' : '#F87171',
+                                        background: isConfirmed ? 'rgba(94, 128, 109, 0.18)' : 'rgba(180, 74, 74, 0.18)',
+                                        color: isConfirmed ? 'var(--dark-green)' : 'var(--color-primary)',
                                     }}>
                                         {booking.status}
                                     </span>
                                 </div>
 
                                 <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                                    {booking.eventName}
+                                    {booking.eventName || booking.experienceTitle}
                                 </h3>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '1.25rem', fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
@@ -222,6 +251,12 @@ export default function MyBookings() {
                                         <CalendarIcon size={14} style={{ color: 'var(--color-primary-light)' }} />
                                         <span>{booking.eventDate}</span>
                                     </div>
+                                    {booking.timeSlot && (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            <Clock size={14} style={{ color: 'var(--color-primary)' }} />
+                                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{booking.timeSlot}</span>
+                                        </div>
+                                    )}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                         <MapPin size={14} style={{ color: 'var(--color-primary)' }} />
                                         <span style={{
@@ -229,7 +264,7 @@ export default function MyBookings() {
                                             textOverflow: 'ellipsis',
                                             overflow: 'hidden',
                                             maxWidth: '240px'
-                                        }}>{booking.location}</span>
+                                        }}>{booking.location || booking.monasteryName}</span>
                                     </div>
                                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>
                                         Booked on: {new Date(booking.createdAt).toLocaleDateString()}
@@ -237,8 +272,8 @@ export default function MyBookings() {
                                 </div>
 
                                 <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                                        👥 {booking.attendees} {booking.attendees === 1 ? 'Attendee' : 'Attendees'}
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <Users size={14} /> {booking.attendees} {booking.attendees === 1 ? 'Attendee' : 'Attendees'}
                                     </span>
 
                                     {isConfirmed ? (
@@ -263,9 +298,9 @@ export default function MyBookings() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 style={{
-                                                    background: 'rgba(74,222,128,0.1)',
-                                                    color: '#4ADE80',
-                                                    border: '1px solid rgba(74,222,128,0.2)',
+                                                    background: 'rgba(94, 128, 109, 0.15)',
+                                                    color: 'var(--dark-green)',
+                                                    border: '1px solid var(--border-subtle)',
                                                     borderRadius: 'var(--radius-md)',
                                                     padding: '5px 10px',
                                                     fontSize: '0.75rem',
@@ -277,14 +312,14 @@ export default function MyBookings() {
                                                     gap: '4px',
                                                 }}
                                             >
-                                                📅 Calendar
+                                                <CalendarIcon size={12} /> Calendar
                                             </a>
                                             <button
                                                 onClick={() => setActiveCancel(booking)}
                                                 style={{
-                                                    background: 'rgba(239,68,68,0.1)',
-                                                    color: '#F87171',
-                                                    border: '1px solid rgba(239,68,68,0.2)',
+                                                    background: 'rgba(180, 74, 74, 0.15)',
+                                                    color: 'var(--color-primary)',
+                                                    border: '1px solid var(--border-subtle)',
                                                     borderRadius: 'var(--radius-md)',
                                                     padding: '5px 10px',
                                                     fontSize: '0.75rem',
@@ -329,20 +364,27 @@ export default function MyBookings() {
                             </div>
 
                             <div>
-                                <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Event Name</span>
-                                <strong style={{ color: 'var(--text-primary)' }}>{activeDetail.eventName}</strong>
+                                <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Experience / Event Name</span>
+                                <strong style={{ color: 'var(--text-primary)' }}>{activeDetail.eventName || activeDetail.experienceTitle}</strong>
                             </div>
 
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                                 <div>
-                                    <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Event Date</span>
+                                    <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Date</span>
                                     <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{activeDetail.eventDate}</span>
                                 </div>
                                 <div>
-                                    <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Location</span>
-                                    <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{activeDetail.location}</span>
+                                    <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>{activeDetail.timeSlot ? 'Time Slot' : 'Location'}</span>
+                                    <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{activeDetail.timeSlot || activeDetail.location}</span>
                                 </div>
                             </div>
+
+                            {activeDetail.timeSlot && (
+                                <div>
+                                    <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.75rem' }}>Monastery Location</span>
+                                    <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{activeDetail.location || activeDetail.monasteryName}</span>
+                                </div>
+                            )}
 
                             <hr style={{ border: 'none', borderTop: '1px solid var(--border-subtle)', margin: '4px 0' }} />
 
@@ -475,7 +517,7 @@ export default function MyBookings() {
                                 fontSize: '1.75rem',
                                 margin: '0 auto 1.25rem',
                             }}>
-                                ⚠️
+                                <AlertTriangle size={28} />
                             </div>
                             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>
                                 Cancel Reservation?

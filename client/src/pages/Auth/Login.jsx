@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Input, Button } from '../../components/UI/index';
+import { LogoIcon } from '../../components/UI/Logo';
 import toast from 'react-hot-toast';
 import '../pages.css';
 
@@ -49,7 +50,9 @@ export default function Login() {
         <div className="auth-page">
             <div className="auth-card">
                 <div className="auth-header">
-                    <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🏯</div>
+                    <div style={{ marginBottom: '0.75rem' }}>
+                        <LogoIcon size={52} />
+                    </div>
                     <h1 className="auth-title">Welcome Back</h1>
                     <p className="auth-subtitle">Sign in to your Monastery360 account</p>
                 </div>

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Shared UI Components CSS
+   Shared UI Components CSS — High Contrast Government Portal Standards
 ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Button ──────────────────────────────────────────────────────────────── */
@@ -15,49 +15,57 @@
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
+    letter-spacing: 0.01em;
 }
 
 .btn:disabled {
-    opacity: 0.5;
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
+/* White text on dark/red buttons */
 .btn--primary {
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
-    color: var(--text-inverse);
+    background: #8B2E2E;
+    color: #FFFFFF !important;
+    border: 1px solid #752525;
 }
 
 .btn--primary:hover:not(:disabled) {
-    opacity: 0.9;
+    background: #A53A3A;
+    box-shadow: 0 4px 12px rgba(139, 46, 46, 0.25);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-glow);
 }
 
+/* Dark text on light/gold buttons as required */
 .btn--secondary {
-    background: var(--color-secondary);
-    color: #fff;
+    background: #F4D06F;
+    color: #0F172A !important;
+    border: 1px solid #E5BF55;
+    font-weight: 700;
 }
 
 .btn--secondary:hover:not(:disabled) {
-    opacity: 0.85;
+    background: #E5BF55;
     transform: translateY(-1px);
 }
 
 .btn--outline {
     background: transparent;
-    border: 1px solid var(--border-medium);
+    border: 1.5px solid var(--border-medium);
     color: var(--text-primary);
+    font-weight: 600;
 }
 
 .btn--outline:hover:not(:disabled) {
     border-color: var(--color-primary);
     color: var(--color-primary);
-    background: rgba(201, 135, 58, 0.07);
+    background: rgba(var(--primary-rgb), 0.1);
 }
 
 .btn--ghost {
     background: transparent;
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .btn--ghost:hover:not(:disabled) {
@@ -66,12 +74,14 @@
 }
 
 .btn--danger {
-    background: #E84545;
-    color: #fff;
+    background: #DC2626;
+    color: #FFFFFF !important;
+    border: 1px solid #B91C1C;
+    font-weight: 600;
 }
 
 .btn--danger:hover:not(:disabled) {
-    background: #c03030;
+    background: #B91C1C;
 }
 
 /* Sizes */
@@ -97,8 +107,8 @@
 .btn-spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #FFFFFF;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
 }
@@ -109,6 +119,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
 }
 
 .card--hover {
@@ -126,36 +137,47 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 10px;
+    padding: 4px 12px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     border-radius: var(--radius-full);
 }
 
 .badge--default {
     background: var(--bg-elevated);
-    color: var(--text-secondary);
-}
-
-.badge--gold {
-    background: rgba(201, 135, 58, 0.15);
-    color: var(--color-primary);
+    color: var(--text-primary);
     border: 1px solid var(--border-subtle);
 }
 
+.badge--gold {
+    background: rgba(181, 139, 58, 0.16);
+    color: #8B2E2E;
+    border: 1px solid rgba(181, 139, 58, 0.4);
+}
+
+[data-theme='dark'] .badge--gold {
+    background: rgba(244, 208, 111, 0.16);
+    color: #F4D06F;
+    border: 1px solid rgba(244, 208, 111, 0.4);
+}
+
 .badge--purple {
-    background: rgba(123, 94, 167, 0.15);
-    color: var(--color-secondary);
+    background: rgba(123, 94, 167, 0.16);
+    color: #6B21A8;
+    border: 1px solid rgba(123, 94, 167, 0.3);
 }
 
 .badge--red {
-    background: rgba(232, 69, 69, 0.15);
-    color: var(--color-accent);
+    background: rgba(220, 38, 38, 0.15);
+    color: #B91C1C;
+    border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
 .badge--teal {
-    background: rgba(44, 181, 160, 0.15);
-    color: var(--color-teal);
+    background: rgba(37, 82, 64, 0.15);
+    color: var(--heritage-green);
+    border: 1px solid rgba(37, 82, 64, 0.3);
 }
 
 /* ── Input / Select ──────────────────────────────────────────────────────── */
@@ -167,8 +189,8 @@
 
 .input-label {
     font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .input-field,
@@ -176,7 +198,7 @@
     width: 100%;
     padding: 10px 14px;
     background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-medium);
     border-radius: var(--radius-md);
     font-size: 0.9375rem;
     color: var(--text-primary);
@@ -187,16 +209,21 @@
 .select-field:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(201, 135, 58, 0.15);
+    box-shadow: 0 0 0 3px rgba(139, 46, 46, 0.18);
+}
+
+.input-field::placeholder {
+    color: var(--text-muted);
 }
 
 .input-field--error {
-    border-color: var(--color-accent);
+    border-color: #DC2626;
 }
 
 .input-error {
     font-size: 0.8125rem;
-    color: var(--color-accent);
+    font-weight: 500;
+    color: #DC2626;
 }
 
 .select-field {
@@ -204,7 +231,8 @@
 }
 
 .select-field option {
-    background: var(--bg-elevated);
+    background: var(--bg-card);
+    color: var(--text-primary);
 }
 
 /* ── SearchBar ───────────────────────────────────────────────────────────── */
@@ -218,6 +246,7 @@
     position: absolute;
     left: 14px;
     font-size: 0.875rem;
+    color: var(--color-primary);
     pointer-events: none;
 }
 
@@ -225,11 +254,11 @@
     width: 100%;
     padding: 10px 14px 10px 40px;
     background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-medium);
     border-radius: var(--radius-full);
     font-size: 0.9375rem;
     color: var(--text-primary);
-    transition: border-color var(--transition-fast);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input:focus {
@@ -261,13 +290,15 @@
 .empty-state-title,
 .error-state-title {
     font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--text-primary);
 }
 
 .empty-state-message,
 .error-state-message {
     font-size: 0.9375rem;
-    color: var(--text-muted);
-    max-width: 360px;
+    color: var(--text-secondary);
+    max-width: 420px;
+    line-height: 1.6;
 }

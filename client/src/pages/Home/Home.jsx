@@ -1,22 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Landmark, Map, Flame, Compass, Search, CalendarDays, Headphones, ArrowRight } from 'lucide-react';
 import '../pages.css';
+import '../FeatureCard.css';
 
+// Each feature card gets a real Sikkim monastery/landscape photograph
 const FEATURES = [
-    { icon: '🗺️', title: 'Interactive Map', desc: 'Explore monastery locations across Sikkim with live crowd data', to: '/map' },
-    { icon: '🔥', title: 'Crowd Heatmap', desc: 'Plan your visit with real-time visitor density information', to: '/crowd' },
-    { icon: '🎭', title: 'Virtual Tours', desc: 'Immersive 360° experiences of sacred spaces from anywhere', to: '/virtual-tour' },
-    { icon: '🔍', title: 'Smart Search', desc: 'AI-powered search matching your interests to ideal monasteries', to: '/search' },
-    { icon: '📅', title: 'Cultural Calendar', desc: 'Never miss a festival or sacred event at any monastery', to: '/calendar' },
-    { icon: '🎧', title: 'Audio Guide', desc: 'Multi-language narrations by expert cultural historians', to: '/audio' },
+    {
+        icon: Map,
+        title: 'Interactive Map',
+        badge: 'Live Crowd Data',
+        desc: 'Explore monastery locations across all four districts of Sikkim with real-time visitor density overlays.',
+        to: '/map',
+        image: '/images/lingdum.jpg',
+        imageFocus: 'center 50%',
+    },
+    {
+        icon: Flame,
+        title: 'Crowd Heatmap',
+        badge: 'Smart Planning',
+        desc: 'Plan your visit with real-time visitor density heatmaps to avoid crowds at sacred sites.',
+        to: '/crowd',
+        image: '/images/phodong.jpg',
+        imageFocus: 'center 40%',
+    },
+    {
+        icon: Compass,
+        title: 'Virtual Tours',
+        badge: '360° Immersive',
+        desc: 'Immersive 360° virtual walkthroughs of sacred monastery interiors from anywhere in the world.',
+        to: '/virtual-tour',
+        image: '/images/ralang.jpg',
+        imageFocus: 'center 35%',
+    },
+    {
+        icon: Search,
+        title: 'Smart Search',
+        badge: 'AI Powered',
+        desc: 'AI-powered search matching your spiritual interests, travel dates, and preferences to ideal monasteries.',
+        to: '/search',
+        image: '/images/sangaChoeling.jpg',
+        imageFocus: 'center 30%',
+    },
+    {
+        icon: CalendarDays,
+        title: 'Cultural Calendar',
+        badge: 'Festival Dates',
+        desc: 'Never miss a sacred Cham dance, Losar festival, or monastic ceremony across all monasteries.',
+        to: '/calendar',
+        image: '/images/pemayangtse.jpg',
+        imageFocus: 'center 45%',
+    },
+    {
+        icon: Headphones,
+        title: 'Audio Guide',
+        badge: 'EN · HI · NE · BO',
+        desc: 'Multi-language narrations by expert cultural historians for each monastery and sacred space.',
+        to: '/audio',
+        image: '/images/enchey.jpg',
+        imageFocus: 'center 25%',
+    },
 ];
 
 export default function Home() {
     return (
         <div>
-            {/* Hero */}
+            {/* ── Hero ─────────────────────────────────────────────────── */}
             <section className="home-hero">
-                <span className="home-hero-eyebrow">🏛️ Digital Heritage Initiative</span>
+                <span className="home-hero-eyebrow"><Landmark size={14} /> Digital Heritage Initiative</span>
                 <h1 className="home-hero-title">
                     Discover Sikkim's<br />
                     <span className="gradient-text">Monastery Heritage</span>
@@ -50,30 +101,57 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Features */}
+            {/* ── Features ─────────────────────────────────────────────── */}
             <section style={{ padding: '5rem 0', background: 'var(--bg-deep)' }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', color: 'var(--text-primary)' }}>
+                        <h2 style={{
+                            fontFamily: 'var(--font-display)',
+                            fontSize: 'clamp(1.5rem,3vw,2.25rem)',
+                            color: 'var(--text-primary)',
+                        }}>
                             Smart Features for <span className="gradient-text">Smart Tourism</span>
                         </h2>
                         <p style={{ color: 'var(--text-secondary)', marginTop: '0.75rem', fontSize: '1rem' }}>
-                            Coming across parts 2–5 of the MONASTERY360 platform
+                            Explore the full Monastery360 platform — digital tools for heritage visitors
                         </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: '1.5rem' }}>
-                        {FEATURES.map((f) => (
-                            <Link to={f.to} key={f.title} style={{ textDecoration: 'none' }}>
-                                <div className="card card--hover" style={{ height: '100%' }}>
-                                    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{f.icon}</div>
-                                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.125rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                                        {f.title}
-                                    </h3>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>{f.desc}</p>
-                                </div>
-                            </Link>
-                        ))}
+                    <div className="home-features-grid">
+                        {FEATURES.map((f) => {
+                            const Icon = f.icon;
+                            return (
+                                <Link
+                                    to={f.to}
+                                    key={f.title}
+                                    className="feat-card"
+                                    style={{
+                                        backgroundImage: `url('${f.image}')`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: f.imageFocus,
+                                        backgroundRepeat: 'no-repeat',
+                                    }}
+                                    aria-label={f.title}
+                                >
+                                    <div className="feat-card__overlay" />
+                                    <div className="feat-card__body">
+                                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
+                                            <div className="feat-card__icon">
+                                                <Icon size={22} strokeWidth={1.75} />
+                                            </div>
+                                            <span className="feat-card__badge">{f.badge}</span>
+                                        </div>
+                                        <h3 className="feat-card__title">{f.title}</h3>
+                                        <p className="feat-card__desc">{f.desc}</p>
+                                        <div className="feat-card__footer">
+                                            <span className="feat-card__cta">
+                                                Explore <ArrowRight size={13} />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

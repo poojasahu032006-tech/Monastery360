@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Calendar as CalendarIcon, MapPin, Sparkles, Clock, X } from 'lucide-react';
+import { Calendar as CalendarIcon, MapPin, Sparkles, Clock, X, Lock, Droplets, Mountain, Landmark, Compass, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import bookingService from '../../services/bookingService';
 import toast from 'react-hot-toast';
 import '../pages.css';
+import '../FeatureCard.css';
 
 const EVENTS_DATA = [
     {
@@ -14,7 +15,9 @@ const EVENTS_DATA = [
         district: 'East & North Sikkim',
         date: 'Feb 12 - Feb 15, 2026',
         category: 'Sacred Festival',
-        emoji: '🏮',
+        icon: Sparkles,
+        image: '/images/phodong.jpg',
+        imageFocus: 'center 35%',
         desc: 'Celebration of the Tibetan New Year with special prayers, hoisting of prayer flags, traditional food, and sacred rituals.',
     },
     {
@@ -24,7 +27,9 @@ const EVENTS_DATA = [
         district: 'West Sikkim',
         date: 'March 3, 2026',
         category: 'Rituals',
-        emoji: '🏺',
+        icon: Droplets,
+        image: '/images/ralang.jpg',
+        imageFocus: 'center 40%',
         desc: 'The unsealing of the sacred pot of holy water to predict the fortunes and rainfall for the coming year.',
     },
     {
@@ -34,7 +39,9 @@ const EVENTS_DATA = [
         district: 'Gangtok, East Sikkim',
         date: 'Sept 15, 2026',
         category: 'Sacred Festival',
-        emoji: '🏔️',
+        icon: Mountain,
+        image: '/images/lachen.jpg',
+        imageFocus: 'center 45%',
         desc: 'Unique Sikkimese festival honoring Mount Kanchenjunga as the guardian deity of the kingdom.',
     },
     {
@@ -44,7 +51,9 @@ const EVENTS_DATA = [
         district: 'Gangtok, East Sikkim',
         date: 'Dec 18 - Dec 19, 2026',
         category: 'Cham Masked Dances',
-        emoji: '🎭',
+        icon: Landmark,
+        image: '/images/enchey.jpg',
+        imageFocus: 'center 30%',
         desc: 'Monks perform solemn ritual masked dances symbolizing the victory of good over evil forces.',
     },
     {
@@ -54,8 +63,10 @@ const EVENTS_DATA = [
         district: 'West Sikkim',
         date: 'Nov 1, 2026',
         category: 'Rituals',
-        emoji: '☸️',
-        desc: 'Commemorating Lord Buddha\'s descent from Tushita heaven back to earth following teachings to his mother.',
+        icon: Compass,
+        image: '/images/pemayangtse.jpg',
+        imageFocus: 'center 50%',
+        desc: "Commemorating Lord Buddha's descent from Tushita heaven back to earth following teachings to his mother.",
     },
 ];
 
@@ -135,7 +146,7 @@ export default function Events() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(13, 15, 20, 0.85)',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
         backdropFilter: 'blur(8px)',
         display: 'flex',
         alignItems: 'center',
@@ -181,10 +192,10 @@ export default function Events() {
                             padding: '8px 20px',
                             borderRadius: 'var(--radius-full)',
                             fontSize: '0.875rem',
-                            fontWeight: 500,
-                            border: selectedCategory === cat ? '1px solid var(--color-primary)' : '1px solid var(--border-subtle)',
+                            fontWeight: 600,
+                            border: selectedCategory === cat ? '1px solid var(--color-primary)' : '1px solid var(--border-medium)',
                             background: selectedCategory === cat ? 'var(--color-primary)' : 'var(--bg-card)',
-                            color: selectedCategory === cat ? 'var(--text-inverse)' : 'var(--text-secondary)',
+                            color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-primary)',
                             cursor: 'pointer',
                             transition: 'all var(--transition-fast)',
                         }}
@@ -194,63 +205,62 @@ export default function Events() {
                 ))}
             </div>
 
-            {/* Events Grid */}
+            {/* Events Grid — image-background cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
-                {filtered.map((item) => (
-                    <div
-                        key={item.id}
-                        className="card card--hover"
-                        onClick={() => setDetailEvent(item)}
-                        style={{ display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                            <span style={{ fontSize: '2.5rem' }}>{item.emoji}</span>
-                            <span className="badge badge--gold" style={{ fontSize: '0.75rem' }}>{item.category}</span>
-                        </div>
-
-                        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                            {item.title}
-                        </h3>
-
-                        <p style={{ fontSize: '0.875rem', color: 'var(--color-primary-light)', fontWeight: 500, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <CalendarIcon size={14} /> {item.date}
-                        </p>
-
-                        <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <MapPin size={14} style={{ color: 'var(--color-primary)' }} /> {item.monastery} ({item.district})
-                        </p>
-
-                        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: '1.6', flex: 1, marginBottom: '1.25rem' }}>
-                            {item.desc}
-                        </p>
-
+                {filtered.map((item) => {
+                    const Icon = item.icon;
+                    return (
                         <div
-                            style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                            onClick={(e) => e.stopPropagation()} // Prevent details modal opening when booking
+                            key={item.id}
+                            className="feat-card"
+                            onClick={() => setDetailEvent(item)}
+                            style={{
+                                backgroundImage: `url('${item.image}')`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: item.imageFocus,
+                                backgroundRepeat: 'no-repeat',
+                                minHeight: '360px',
+                            }}
                         >
-                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <Clock size={12} /> Open to Public
-                            </span>
-                            
-                            <button
-                                onClick={() => handleOpenBookingModal(item)}
-                                style={{
-                                    background: 'var(--color-primary)',
-                                    color: 'var(--text-inverse)',
-                                    border: 'none',
-                                    borderRadius: 'var(--radius-md)',
-                                    padding: '6px 14px',
-                                    fontSize: '0.8125rem',
-                                    fontWeight: 600,
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s',
-                                }}
-                            >
-                                Book Event
-                            </button>
+                            <div className="feat-card__overlay" />
+                            <div className="feat-card__body">
+                                {/* Icon + badge row */}
+                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
+                                    <div className="feat-card__icon">
+                                        <Icon size={22} strokeWidth={1.75} />
+                                    </div>
+                                    <span className="feat-card__badge">{item.category}</span>
+                                </div>
+
+                                <h3 className="feat-card__title">{item.title}</h3>
+
+                                <p className="feat-card__meta">
+                                    <CalendarIcon size={14} /> {item.date}
+                                </p>
+                                <p className="feat-card__meta" style={{ marginBottom: '0.75rem', color: '#E2E8F0' }}>
+                                    <MapPin size={14} style={{ color: '#F4D06F' }} /> {item.monastery} &middot; {item.district}
+                                </p>
+
+                                <p className="feat-card__desc">{item.desc}</p>
+
+                                <div
+                                    className="feat-card__footer"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <span style={{ fontSize: '0.78125rem', color: '#FFFFFF', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                                        <Clock size={12} style={{ color: '#F4D06F' }} /> Open to Public
+                                    </span>
+                                    <button
+                                        className="feat-card__cta feat-card__cta--solid"
+                                        onClick={() => handleOpenBookingModal(item)}
+                                    >
+                                        Book Event <ArrowRight size={13} />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             {/* ─── 1. Auth Required Modal ─── */}
@@ -264,7 +274,7 @@ export default function Events() {
                             <X size={20} />
                         </button>
                         <div style={{ textAlign: 'center', padding: '1rem 0' }}>
-                            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔒</div>
+                            <Lock size={44} style={{ color: 'var(--color-primary)', marginBottom: '1rem' }} />
                             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>
                                 Authentication Required
                             </h2>
@@ -387,18 +397,17 @@ export default function Events() {
                         <div style={ModalStyle} onClick={(e) => e.stopPropagation()}>
                             <div style={{ textAlign: 'center', padding: '1rem 0' }}>
                                 <div style={{
-                                    width: '64px',
-                                    height: '64px',
+                                    width: '60px',
+                                    height: '60px',
                                     borderRadius: '50%',
-                                    background: 'rgba(201, 135, 58, 0.15)',
-                                    color: 'var(--color-primary)',
+                                    background: 'rgba(94, 128, 109, 0.2)',
+                                    color: 'var(--heritage-green)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: '2rem',
                                     margin: '0 auto 1.5rem',
                                 }}>
-                                    ✓
+                                    <CheckCircle2 size={32} />
                                 </div>
                                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>
                                     Event Booked Successfully!
@@ -456,18 +465,18 @@ export default function Events() {
                                 <div style={{ background: 'var(--bg-elevated)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                                     <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Selected Event</div>
                                     <strong style={{ fontSize: '0.95rem', color: 'var(--text-primary)' }}>{selectedEvent.title}</strong>
-                                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                                        📅 {selectedEvent.date}
+                                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <CalendarIcon size={12} /> {selectedEvent.date}
                                     </div>
-                                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-                                        📍 {selectedEvent.monastery}
+                                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <MapPin size={12} /> {selectedEvent.monastery}
                                     </div>
                                 </div>
 
                                 {/* User Details */}
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                                     <div>
-                                        <label style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Name</label>
+                                        <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '4px' }}>Name</label>
                                         <input
                                             type="text"
                                             readOnly
@@ -475,17 +484,17 @@ export default function Events() {
                                             style={{
                                                 width: '100%',
                                                 background: 'var(--bg-elevated)',
-                                                border: '1px solid var(--border-subtle)',
+                                                border: '1px solid var(--border-medium)',
                                                 borderRadius: 'var(--radius-md)',
                                                 padding: '8px 12px',
-                                                color: 'var(--text-secondary)',
+                                                color: 'var(--text-primary)',
                                                 fontSize: '0.875rem',
                                                 outline: 'none',
                                             }}
                                         />
                                     </div>
                                     <div>
-                                        <label style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Email</label>
+                                        <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '4px' }}>Email</label>
                                         <input
                                             type="text"
                                             readOnly
@@ -493,10 +502,10 @@ export default function Events() {
                                             style={{
                                                 width: '100%',
                                                 background: 'var(--bg-elevated)',
-                                                border: '1px solid var(--border-subtle)',
+                                                border: '1px solid var(--border-medium)',
                                                 borderRadius: 'var(--radius-md)',
                                                 padding: '8px 12px',
-                                                color: 'var(--text-secondary)',
+                                                color: 'var(--text-primary)',
                                                 fontSize: '0.875rem',
                                                 outline: 'none',
                                             }}
@@ -506,8 +515,8 @@ export default function Events() {
 
                                 {/* Booking Inputs */}
                                 <div>
-                                    <label style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
-                                        Number of Attendees <span style={{ color: 'var(--color-primary-light)' }}>*</span>
+                                    <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '4px' }}>
+                                        Number of Attendees <span style={{ color: '#DC2626' }}>*</span>
                                     </label>
                                     <input
                                         type="number"
@@ -518,7 +527,7 @@ export default function Events() {
                                         style={{
                                             width: '100%',
                                             background: 'var(--bg-elevated)',
-                                            border: '1px solid var(--border-subtle)',
+                                            border: '1px solid var(--border-medium)',
                                             borderRadius: 'var(--radius-md)',
                                             padding: '8px 12px',
                                             color: 'var(--text-primary)',
@@ -529,8 +538,8 @@ export default function Events() {
                                 </div>
 
                                 <div>
-                                    <label style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
-                                        Phone Number <span style={{ color: 'var(--text-muted)' }}>(Optional)</span>
+                                    <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '4px' }}>
+                                        Phone Number <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>(Optional)</span>
                                     </label>
                                     <input
                                         type="tel"
@@ -540,7 +549,7 @@ export default function Events() {
                                         style={{
                                             width: '100%',
                                             background: 'var(--bg-elevated)',
-                                            border: '1px solid var(--border-subtle)',
+                                            border: '1px solid var(--border-medium)',
                                             borderRadius: 'var(--radius-md)',
                                             padding: '8px 12px',
                                             color: 'var(--text-primary)',
@@ -551,8 +560,8 @@ export default function Events() {
                                 </div>
 
                                 <div>
-                                    <label style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
-                                        Special Requirements / Message <span style={{ color: 'var(--text-muted)' }}>(Optional)</span>
+                                    <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '4px' }}>
+                                        Special Requirements / Message <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>(Optional)</span>
                                     </label>
                                     <textarea
                                         placeholder="Please note any details, requests, or questions..."
@@ -562,7 +571,7 @@ export default function Events() {
                                         style={{
                                             width: '100%',
                                             background: 'var(--bg-elevated)',
-                                            border: '1px solid var(--border-subtle)',
+                                            border: '1px solid var(--border-medium)',
                                             borderRadius: 'var(--radius-md)',
                                             padding: '8px 12px',
                                             color: 'var(--text-primary)',

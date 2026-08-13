@@ -66,7 +66,7 @@ export default function Calendar() {
                 {/* Days Grid View */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px', textAlign: 'center', marginBottom: '1.5rem' }}>
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                        <div key={d} style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', paddingBottom: '8px' }}>
+                        <div key={d} style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)', paddingBottom: '8px' }}>
                             {d}
                         </div>
                     ))}
@@ -78,19 +78,19 @@ export default function Calendar() {
                                 style={{
                                     height: '52px',
                                     borderRadius: 'var(--radius-sm)',
-                                    background: hasEvent ? 'rgba(201,135,58,0.2)' : 'var(--bg-elevated)',
-                                    border: hasEvent ? '1px solid var(--color-primary)' : '1px solid var(--border-subtle)',
+                                    background: hasEvent ? 'rgba(139, 46, 46, 0.15)' : 'var(--bg-elevated)',
+                                    border: hasEvent ? '1.5px solid var(--color-primary)' : '1px solid var(--border-medium)',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
-                                    justify: 'center',
-                                    fontSize: '0.875rem',
-                                    color: hasEvent ? 'var(--color-primary-light)' : 'var(--text-secondary)',
-                                    fontWeight: hasEvent ? 700 : 400,
+                                    justifyContent: 'center',
+                                    fontSize: '0.9375rem',
+                                    color: hasEvent ? 'var(--color-primary)' : 'var(--text-primary)',
+                                    fontWeight: 700,
                                 }}
                             >
                                 <span>{day}</span>
-                                {hasEvent && <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--color-primary)', marginTop: '2px' }}></span>}
+                                {hasEvent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-primary)', marginTop: '2px' }}></span>}
                             </div>
                         );
                     })}
@@ -98,7 +98,7 @@ export default function Calendar() {
 
                 {/* Events list for month */}
                 <div>
-                    <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <CalendarIcon size={16} style={{ color: 'var(--color-primary)' }} /> Events in {selectedMonthName}
                     </h3>
                     {monthEvents.length > 0 ? (
@@ -110,27 +110,30 @@ export default function Calendar() {
                                     borderRadius: 'var(--radius-md)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justify: 'space-between',
-                                    borderLeft: '3px solid var(--color-primary)'
+                                    justifyContent: 'space-between',
+                                    borderLeft: '4px solid var(--color-primary)',
+                                    borderTop: '1px solid var(--border-subtle)',
+                                    borderRight: '1px solid var(--border-subtle)',
+                                    borderBottom: '1px solid var(--border-subtle)',
                                 }}>
                                     <div>
-                                        <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 600 }}>{ev.title}</div>
-                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{ev.monastery}</div>
+                                        <div style={{ fontSize: '0.9375rem', color: 'var(--text-primary)', fontWeight: 700 }}>{ev.title}</div>
+                                        <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>{ev.monastery}</div>
                                     </div>
-                                    <span className="badge badge--gold" style={{ fontSize: '0.75rem' }}>Day {ev.day} • {ev.type}</span>
+                                    <span className="badge badge--gold" style={{ fontSize: '0.75rem', fontWeight: 700 }}>Day {ev.day} • {ev.type}</span>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
                             No major public festival listed for this month. Daily morning and evening prayer sessions continue at all monasteries.
                         </p>
                     )}
                 </div>
             </div>
 
-            <div className="card" style={{ maxWidth: '800px', margin: '0 auto', background: 'rgba(201, 135, 58, 0.04)', border: '1px dashed var(--border-subtle)', textAlign: 'center', padding: '1.5rem' }}>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <div className="card" style={{ maxWidth: '800px', margin: '0 auto', background: 'rgba(var(--primary-rgb), 0.04)', border: '1px dashed var(--border-medium)', textAlign: 'center', padding: '1.5rem' }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                     <Info size={16} style={{ color: 'var(--color-primary)' }} /> Part 3 will connect this calendar to real-time notification alerts and Google Calendar exports.
                 </p>
             </div>

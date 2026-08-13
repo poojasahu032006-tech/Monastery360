@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Input, Button } from '../../components/UI/index';
+import { LogoIcon } from '../../components/UI/Logo';
 import toast from 'react-hot-toast';
 import '../pages.css';
 
@@ -49,7 +50,7 @@ export default function Register() {
         setLoading(true);
         try {
             await register(form.name, form.email, form.password, prefs);
-            toast.success('Account created! Welcome to Monastery360 🏯');
+            toast.success('Account created! Welcome to Monastery360');
             navigate('/');
         } catch (err) {
             const msg = err.response?.data?.message || 'Registration failed.';
@@ -63,7 +64,9 @@ export default function Register() {
         <div className="auth-page">
             <div className="auth-card" style={{ maxWidth: 500 }}>
                 <div className="auth-header">
-                    <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🏯</div>
+                    <div style={{ marginBottom: '0.75rem' }}>
+                        <LogoIcon size={52} />
+                    </div>
                     <h1 className="auth-title">Join Monastery360</h1>
                     <p className="auth-subtitle">Create your account to explore Sikkim's heritage</p>
                 </div>

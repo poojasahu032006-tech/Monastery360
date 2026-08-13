@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { X } from 'lucide-react';
 
 /**
  * Full‑screen 360° panorama viewer using Pannellum (CDN).
@@ -35,10 +36,13 @@ export default function VirtualTourModal({ imageUrl, title, onClose }) {
     right: '0.5rem',
     background: 'none',
     border: 'none',
-    color: 'var(--text-inverse)',
+    color: 'var(--text-primary)',
     fontSize: '1.5rem',
     cursor: 'pointer',
     zIndex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   };
 
   const viewerRef = useRef(null);
@@ -86,7 +90,7 @@ export default function VirtualTourModal({ imageUrl, title, onClose }) {
   return (
     <div style={overlayStyle} onClick={onClose}>
       <div style={contentStyle} onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} style={closeBtnStyle}>✕</button>
+        <button onClick={onClose} style={closeBtnStyle} aria-label="Close"><X size={24} /></button>
         {title && (
           <h2 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)' }}>{title}</h2>
         )}
