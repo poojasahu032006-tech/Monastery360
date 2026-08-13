@@ -1,0 +1,200 @@
+/* Shared page placeholder CSS */
+.page-placeholder {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    gap: var(--space-lg);
+    animation: fadeIn 0.4s ease;
+}
+
+.page-placeholder-emoji {
+    font-size: 3.5rem;
+}
+
+.page-placeholder-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--text-primary);
+}
+
+.page-placeholder-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 480px;
+    line-height: 1.7;
+}
+
+.page-placeholder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: rgba(201, 135, 58, 0.1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+}
+
+/* Home hero */
+.home-hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+    background: radial-gradient(ellipse at 50% 0%, rgba(201, 135, 58, 0.12) 0%, transparent 65%);
+    gap: var(--space-xl);
+    animation: fadeIn 0.6s ease;
+}
+
+.home-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: rgba(201, 135, 58, 0.1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    letter-spacing: 0.04em;
+}
+
+.home-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.15;
+    color: var(--text-primary);
+    max-width: 800px;
+}
+
+.home-hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.75;
+}
+
+.home-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home-stats {
+    display: flex;
+    gap: var(--space-2xl);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border-subtle);
+    width: 100%;
+    max-width: 600px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+}
+
+/* Auth pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3xl) var(--space-xl);
+    background: radial-gradient(ellipse at 50% 0%, rgba(201, 135, 58, 0.08) 0%, transparent 65%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.4s ease;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.auth-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.auth-subtitle {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: var(--space-md) 0;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
+}
+
+.auth-footer {
+    margin-top: var(--space-lg);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.auth-link {
+    color: var(--color-primary);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+    color: var(--color-primary-light);
+}
