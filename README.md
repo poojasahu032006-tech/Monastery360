@@ -31,8 +31,8 @@ Monastery360 brings monastery information together in a single interactive platf
 - React.js
 - Vite
 - JavaScript
-- HTML
-- CSS
+- React Router
+- React Leaflet
 
 ### Backend
 - Node.js
